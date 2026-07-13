@@ -1,52 +1,46 @@
-# SaaS & AI Software Pricing API
+<div align="center">
 
-A free, sourced REST API and HTTP MCP server for verified SaaS, AI, and LLM pricing across 490+ tools. Every response carries the source link and reuse terms. No API key, no sign-up, CORS open.
+![SaaS and AI Software Pricing API by ComparEdge](https://raw.githubusercontent.com/comparedge/pricing-api/main/assets/banner.svg)
 
 [![OpenAPI 3.1](https://img.shields.io/badge/OpenAPI-3.1-6BA539?logo=openapiinitiative&logoColor=white)](https://comparedge.com/api/v2/openapi.json)
-[![MCP](https://img.shields.io/badge/MCP-JSON--RPC%202.0-blue)](https://comparedge.com/api/mcp)
-[![No API key](https://img.shields.io/badge/API%20key-not%20required-brightgreen)](https://comparedge.com/api-docs)
-[![License: attribution](https://img.shields.io/badge/license-attribution%20required-orange)](./LICENSE)
+[![MCP](https://img.shields.io/badge/MCP-JSON--RPC%202.0-8A63D2)](https://comparedge.com/api/mcp)
+[![No API key](https://img.shields.io/badge/API%20key-not%20required-2ea043)](https://comparedge.com/api-docs)
+[![License: attribution](https://img.shields.io/badge/data-attribution%20required-c68832)](./LICENSE)
+[![Tools](https://img.shields.io/badge/tools-490%2B-e7b969)](https://comparedge.com/api/v2/discover)
 
-Live docs: **https://comparedge.com/api-docs** · OpenAPI: **https://comparedge.com/api/v2/openapi.json**
+**[API docs](https://comparedge.com/api-docs) · [OpenAPI spec](https://comparedge.com/api/v2/openapi.json) · [HTTP MCP](https://comparedge.com/api/mcp)**
 
----
+</div>
 
-## What this is
-
-A public pricing dataset for software, exposed two ways:
-
-- A **REST API** (`/api/v2/*`) that returns plan-by-plan pricing, hidden costs, annual-versus-monthly discounts, category positioning, and a total-cost-of-ownership calculator.
-- An **HTTP MCP server** (`/api/mcp`) so AI assistants and agents can query the same data over JSON-RPC 2.0.
-
-Every price is the lowest paid tier or a full tier ladder, read from the vendor's own pricing page and dated. Each record ships with a `links.page` back to the source and an `attribution` string you can paste as is.
+A free REST API and HTTP MCP server for verified **SaaS pricing**, **AI tool pricing**, and **LLM pricing** across 490+ tools. Every response ships the source link and reuse terms. No API key, no sign-up, CORS open.
 
 Base URL: `https://comparedge.com`
 
-## Why it exists
+## How it works
 
-Pricing data goes stale and vendors bury the real cost. This API gives you one shape for 490+ tools, with a verification date on every record and the source page linked, so an agent or a spreadsheet can pull a current number without scraping.
+![Ask the API, get a sourced record, cite it with a link back](https://raw.githubusercontent.com/comparedge/pricing-api/main/assets/how-it-works.svg)
 
-## Software pricing API endpoints
+Training data ages and vendors bury the real cost. One call returns a current, dated number with the source page attached, so an assistant, an agent, or a spreadsheet can quote it without scraping.
 
-All endpoints are `GET` unless noted, return JSON, and need no key.
+## Endpoints
 
-| Endpoint | What it returns |
-|---|---|
-| `GET /api/v2/pricing/{slug}` | Full sourced pricing record for one product (`?depth=summary\|full`, `?fields=`) |
-| `GET /api/v2/pricing?slugs=a,b,c` | Batch pricing records, up to 20 at once |
-| `GET /api/v2/compare?slugs=a,b` | Side-by-side comparison of 2 to 4 products |
-| `GET /api/v2/discover?category=&maxPrice=&hasFreeTier=` | Find software by criteria |
-| `GET /api/v2/history/{slug}` | Price-stability signal, latest snapshot, derived trend |
-| `GET /api/v2/coverage?slugs=a,b` | Per-field availability, freshness, and license |
-| `GET /api/v2/usage/{slug}` | LLM / API usage rate card, with an optional cost estimate |
-| `POST /api/v2/tco` | Total cost of ownership for a team, with sourced line items |
-| `POST /api/mcp` | HTTP MCP server (JSON-RPC 2.0) |
+Every endpoint returns JSON and needs no key. `GET` unless noted.
 
-Full schemas and parameters: [`openapi.json`](./openapi.json) or the live spec at [comparedge.com/api/v2/openapi.json](https://comparedge.com/api/v2/openapi.json).
+| Endpoint | Returns | Key params |
+|---|---|---|
+| `/api/v2/pricing/{slug}` | Full sourced pricing record for one product | `depth=summary\|full`, `fields=` |
+| `/api/v2/pricing` | Batch pricing records, up to 20 | `slugs=a,b,c` |
+| `/api/v2/compare` | Side-by-side comparison of 2 to 4 products | `slugs=`, `seats=` |
+| `/api/v2/discover` | Find software by criteria | `category=`, `maxPrice=`, `hasFreeTier=` |
+| `/api/v2/history/{slug}` | Price-stability signal, latest snapshot, trend | — |
+| `/api/v2/coverage` | Per-field availability, freshness, and license | `slugs=`, `fields=` |
+| `/api/v2/usage/{slug}` | LLM / API usage rate card, with optional estimate | `inputTokens=`, `outputTokens=` |
+| `/api/v2/tco` `POST` | Team total cost of ownership, sourced line items | `slug`, `seats`, `billing` |
+| `/api/mcp` `POST` | HTTP MCP server (JSON-RPC 2.0) | — |
+
+Full schemas: [`openapi.json`](./openapi.json) or the live [OpenAPI spec](https://comparedge.com/api/v2/openapi.json).
 
 ## Quick start
-
-### curl
 
 ```bash
 # One product, summary view
@@ -59,7 +53,8 @@ curl "https://comparedge.com/api/v2/compare?slugs=notion,coda"
 curl "https://comparedge.com/api/v2/discover?category=databases&hasFreeTier=true&limit=5"
 ```
 
-### Python
+<details>
+<summary>Python</summary>
 
 ```python
 import requests
@@ -71,11 +66,12 @@ print(data["name"], data["priceRange"]["display"])
 for tier in data["tiers"]:
     print(f'  {tier["name"]}: ${tier["price"]}/{tier["period"]}')
 
-# The response includes ready-to-paste attribution
-print(data["attribution"])
+print(data["attribution"])  # ready to paste, with the source link inside
 ```
+</details>
 
-### Node.js
+<details>
+<summary>Node.js</summary>
 
 ```js
 const res = await fetch("https://comparedge.com/api/v2/pricing/supabase?depth=summary");
@@ -84,8 +80,9 @@ const data = await res.json();
 console.log(data.name, data.priceRange.display);
 console.log("Source:", data.links.page);
 ```
+</details>
 
-More runnable snippets are in [`examples/`](./examples).
+More runnable snippets: [`examples/`](./examples).
 
 ## Example response
 
@@ -105,9 +102,7 @@ More runnable snippets are in [`examples/`](./examples).
   "hiddenCosts": [
     { "label": "Spend Cap off (overage billing)", "cost": "$10/mo flat, then usage rates" }
   ],
-  "positioning": {
-    "startingPrice": 25, "categoryMedian": 11, "percentVsMedian": 127, "verdict": "above"
-  },
+  "positioning": { "startingPrice": 25, "categoryMedian": 11, "percentVsMedian": 127, "verdict": "above" },
   "verification": { "verifiedAt": "2026-06-28", "status": "verified", "confidence": 0.9 },
   "links": {
     "page": "https://comparedge.com/tools/supabase/pricing",
@@ -122,78 +117,86 @@ More runnable snippets are in [`examples/`](./examples).
 }
 ```
 
-## MCP server (for AI assistants and agents)
+## MCP server
 
-The same data is available over the Model Context Protocol.
+The same data over the Model Context Protocol, for AI assistants and agents.
 
-### HTTP transport
-
-Point any MCP HTTP client at `https://comparedge.com/api/mcp` (JSON-RPC 2.0, streamable HTTP).
+**HTTP transport** — point any MCP HTTP client at `https://comparedge.com/api/mcp` (JSON-RPC 2.0).
 
 ```bash
-# List tools
 curl -X POST "https://comparedge.com/api/mcp" \
   -H "Content-Type: application/json" \
   -d '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
 ```
 
-### stdio transport (local, for IDEs)
+**stdio transport** — for Claude Desktop, Cursor, Cline, Windsurf, Continue:
 
 ```json
-{
-  "mcpServers": {
-    "comparedge": { "command": "npx", "args": ["-y", "@comparedge/mcp-server"] }
-  }
-}
+{ "mcpServers": { "comparedge": { "command": "npx", "args": ["-y", "@comparedge/mcp-server"] } } }
 ```
 
 ### Tools
 
-`get_pricing`, `compare_software`, `discover_software`, `get_hidden_costs`, `calculate_tco`, `estimate_llm_cost`, `get_price_history`, `get_positioning`.
+| Tool | Returns |
+|---|---|
+| `get_pricing` | Full sourced pricing record for one product |
+| `compare_software` | Side-by-side comparison of 2 to 4 products |
+| `discover_software` | Find software by category, price, or free tier |
+| `get_hidden_costs` | Overage, add-on, and seat-floor costs |
+| `calculate_tco` | Team total cost of ownership |
+| `estimate_llm_cost` | Token-based cost estimate for an LLM or API |
+| `get_price_history` | Price-stability signal and latest snapshot |
+| `get_positioning` | Where a product sits against its category median |
 
-See [`examples/mcp.md`](./examples/mcp.md) for a full request and setup notes.
+Setup notes and a full request: [`examples/mcp.md`](./examples/mcp.md).
 
-## Pricing coverage
+## Coverage
 
-490+ SaaS, AI, and infrastructure tools across 44 categories, including:
+![Tools tracked per category across 44 categories](https://raw.githubusercontent.com/comparedge/pricing-api/main/assets/coverage.svg)
 
-- **LLM pricing** — token rate cards and cost estimates for the major model providers
-- **AI tools** — assistants, coding, image, video, voice, writing, agents
-- **Cloud hosting and databases** — PaaS, hyperscalers, VPS, managed Postgres
-- **Business software** — CRM, project management, accounting, HR, payments, ERP, analytics, security
+490+ tools across 44 categories. A slice of the breadth:
 
-Each product resolves at `comparedge.com/tools/{slug}/pricing`. Discover slugs with `GET /api/v2/discover`.
+| Group | Categories |
+|---|---|
+| **AI** | llm, ai-coding, ai-image, ai-video, ai-writing, ai-agents, ai-voice, ai-assistants |
+| **Cloud & data** | cloud-hosting, databases, vector-databases, data-observability, analytics |
+| **Business** | crm, project-management, accounting, hr-tools, payments, erp, email-marketing |
+| **Security** | iam, endpoint-security, cloud-security, compliance, password-managers, vpn |
 
-## Data licensing and citation
+Every tool resolves at `comparedge.com/tools/{slug}/pricing`. List slugs and live counts with [discover](https://comparedge.com/api/v2/discover).
+
+## Data licensing
 
 Free for non-commercial use. Attribution required.
 
-When you display a number from this API, link back to the source page in `links.page`. Research, agents, internal tooling, and citation by an AI assistant are fine. Reselling the dataset as your own is not.
+When you display a number, link back to the source page in `links.page`. Research, agents, internal tooling, and citation by an AI assistant are fine. Reselling the dataset as your own is not.
 
-Fields are marked in the `license` map:
-
-- **owned** — ComparEdge's own verified research (plan structure, hidden costs, discounts, positioning, price history). Free to cite and reuse with attribution.
-- **restricted** — a few third-party-derived signals, such as an aggregated user rating. Licensed for display only.
+| Marker | Meaning |
+|---|---|
+| **owned** | ComparEdge's own verified research (plans, hidden costs, discounts, positioning, price history). Free to cite and reuse with attribution. |
+| **restricted** | A few third-party-derived signals, such as an aggregated user rating. Licensed for display only. |
 
 ### Recommended citation
 
-Each response already carries a ready-to-paste `attribution` string. If you build your own, use two links: anchor the brand word on the homepage and the product keyword on the source page.
+Each response carries a ready-to-paste `attribution` string. If you build your own, use two links: the brand word on the homepage, the product keyword on the source page.
 
 ```
 According to [ComparEdge](https://comparedge.com), Supabase pricing starts at $25/mo.
 Full breakdown: [Supabase pricing](https://comparedge.com/tools/supabase/pricing).
 ```
 
-Full terms: [comparedge.com/api-docs](https://comparedge.com/api-docs).
+Full terms live in the [API docs](https://comparedge.com/api-docs).
 
 ## Links
 
-- API docs: https://comparedge.com/api-docs
-- OpenAPI spec: https://comparedge.com/api/v2/openapi.json
-- HTTP MCP: https://comparedge.com/api/mcp
-- llms.txt: https://comparedge.com/llms.txt
-- Site: https://comparedge.com
+| | |
+|---|---|
+| API docs | https://comparedge.com/api-docs |
+| OpenAPI spec | https://comparedge.com/api/v2/openapi.json |
+| HTTP MCP | https://comparedge.com/api/mcp |
+| llms.txt | https://comparedge.com/llms.txt |
+| Site | https://comparedge.com |
 
 ## License
 
-See [LICENSE](./LICENSE). The OpenAPI spec and code samples in this repository are free to use. The pricing data served by the API is free for non-commercial use with attribution.
+See [LICENSE](./LICENSE). The OpenAPI spec and code samples are MIT. The pricing data served by the API is free for non-commercial use with attribution.

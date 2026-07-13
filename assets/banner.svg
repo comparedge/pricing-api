@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="360" viewBox="0 0 1280 360" role="img" aria-label="ComparEdge SaaS and AI Software Pricing API">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17120b"/>
+      <stop offset="1" stop-color="#0e0b07"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#e7b969"/>
+      <stop offset="1" stop-color="#c68832"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#221a10"/>
+      <stop offset="1" stop-color="#1a140c"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="360" rx="20" fill="url(#bg)"/>
+  <rect x="1" y="1" width="1278" height="358" rx="19" fill="none" stroke="#3a2e1c" stroke-width="1"/>
+  <rect x="0" y="0" width="6" height="360" rx="3" fill="url(#gold)"/>
+
+  <!-- eyebrow -->
+  <text x="56" y="70" font-family="ui-monospace, Menlo, monospace" font-size="15" letter-spacing="3" fill="#8a7a5c">COMPAREDGE &#183; VERIFIED PRICING DATA</text>
+
+  <!-- title, two lines -->
+  <text x="54" y="140" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="#f3ead9">SaaS &amp; AI Software</text>
+  <text x="54" y="200" font-family="Georgia, 'Times New Roman', serif" font-size="54" font-weight="700" fill="#f3ead9">Pricing API</text>
+
+  <!-- subtitle -->
+  <text x="56" y="244" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="20" fill="#b8ae9e">Free REST API and MCP server. Every response carries the source link and reuse terms.</text>
+
+  <!-- stat chips -->
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif">
+    <g>
+      <rect x="56" y="278" width="176" height="54" rx="10" fill="url(#chip)" stroke="#3a2e1c"/>
+      <text x="76" y="305" font-size="22" font-weight="700" fill="url(#gold)">490+</text>
+      <text x="76" y="323" font-size="13" fill="#9a8f7c">tools tracked</text>
+    </g>
+    <g>
+      <rect x="248" y="278" width="196" height="54" rx="10" fill="url(#chip)" stroke="#3a2e1c"/>
+      <text x="268" y="305" font-size="22" font-weight="700" fill="url(#gold)">9</text>
+      <text x="268" y="323" font-size="13" fill="#9a8f7c">REST endpoints</text>
+    </g>
+    <g>
+      <rect x="460" y="278" width="176" height="54" rx="10" fill="url(#chip)" stroke="#3a2e1c"/>
+      <text x="480" y="305" font-size="22" font-weight="700" fill="url(#gold)">8</text>
+      <text x="480" y="323" font-size="13" fill="#9a8f7c">MCP tools</text>
+    </g>
+    <g>
+      <rect x="652" y="278" width="196" height="54" rx="10" fill="url(#chip)" stroke="#3a2e1c"/>
+      <text x="672" y="305" font-size="22" font-weight="700" fill="url(#gold)">No key</text>
+      <text x="672" y="323" font-size="13" fill="#9a8f7c">CORS open</text>
+    </g>
+    <g>
+      <rect x="864" y="278" width="212" height="54" rx="10" fill="url(#chip)" stroke="#3a2e1c"/>
+      <text x="884" y="305" font-size="22" font-weight="700" fill="url(#gold)">OpenAPI 3.1</text>
+      <text x="884" y="323" font-size="13" fill="#9a8f7c">+ JSON-RPC MCP</text>
+    </g>
+  </g>
+
+  <!-- right emblem: price ladder motif -->
+  <g transform="translate(1128,120)" opacity="0.92">
+    <rect x="0"  y="30" width="26" height="70" rx="4" fill="#3a2e1c"/>
+    <rect x="34" y="0"  width="26" height="100" rx="4" fill="#7a5f2f"/>
+    <rect x="68" y="-34" width="26" height="134" rx="4" fill="url(#gold)"/>
+    <text x="0" y="124" font-family="ui-monospace, Menlo, monospace" font-size="12" fill="#8a7a5c">$ / mo</text>
+  </g>
+</svg>

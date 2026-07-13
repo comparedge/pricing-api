@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" role="img" aria-label="Coverage by category: number of tools tracked per category">
+  <defs>
+    <linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#17120b"/>
+      <stop offset="1" stop-color="#0e0b07"/>
+    </linearGradient>
+    <linearGradient id="bar" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#c68832"/>
+      <stop offset="1" stop-color="#e7b969"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="0" y="0" width="1280" height="560" rx="20" fill="url(#bg3)"/>
+  <rect x="1" y="1" width="1278" height="558" rx="19" fill="none" stroke="#3a2e1c"/>
+
+  <text x="40" y="54" font-family="Georgia, 'Times New Roman', serif" font-size="26" font-weight="700" fill="#f3ead9">Coverage across 44 categories, 490+ tools</text>
+  <text x="40" y="82" font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15" fill="#9a8f7c">Tools tracked per category (selection). Each one resolves to a dated, sourced pricing record.</text>
+
+  <g font-family="system-ui, -apple-system, 'Segoe UI', sans-serif" font-size="15">
+    <!-- cloud-hosting 24 -->
+    <text x="228" y="130" text-anchor="end" fill="#d8cbb2">cloud-hosting</text>
+    <rect x="240" y="116" width="864" height="20" rx="5" fill="url(#bar)"/>
+    <text x="1116" y="131" fill="#e7b969" font-weight="700">24</text>
+    <!-- llm 20 -->
+    <text x="228" y="163" text-anchor="end" fill="#d8cbb2">llm</text>
+    <rect x="240" y="149" width="720" height="20" rx="5" fill="url(#bar)"/>
+    <text x="972" y="164" fill="#e7b969" font-weight="700">20</text>
+    <!-- project-management 20 -->
+    <text x="228" y="196" text-anchor="end" fill="#d8cbb2">project-management</text>
+    <rect x="240" y="182" width="720" height="20" rx="5" fill="url(#bar)"/>
+    <text x="972" y="197" fill="#e7b969" font-weight="700">20</text>
+    <!-- crm 18 -->
+    <text x="228" y="229" text-anchor="end" fill="#d8cbb2">crm</text>
+    <rect x="240" y="215" width="648" height="20" rx="5" fill="url(#bar)"/>
+    <text x="900" y="230" fill="#e7b969" font-weight="700">18</text>
+    <!-- ai-coding 15 -->
+    <text x="228" y="262" text-anchor="end" fill="#d8cbb2">ai-coding</text>
+    <rect x="240" y="248" width="540" height="20" rx="5" fill="url(#bar)"/>
+    <text x="792" y="263" fill="#e7b969" font-weight="700">15</text>
+    <!-- ai-image 14 -->
+    <text x="228" y="295" text-anchor="end" fill="#d8cbb2">ai-image</text>
+    <rect x="240" y="281" width="504" height="20" rx="5" fill="url(#bar)"/>
+    <text x="756" y="296" fill="#e7b969" font-weight="700">14</text>
+    <!-- databases 14 -->
+    <text x="228" y="328" text-anchor="end" fill="#d8cbb2">databases</text>
+    <rect x="240" y="314" width="504" height="20" rx="5" fill="url(#bar)"/>
+    <text x="756" y="329" fill="#e7b969" font-weight="700">14</text>
+    <!-- ai-agents 13 -->
+    <text x="228" y="361" text-anchor="end" fill="#d8cbb2">ai-agents</text>
+    <rect x="240" y="347" width="468" height="20" rx="5" fill="url(#bar)"/>
+    <text x="720" y="362" fill="#e7b969" font-weight="700">13</text>
+    <!-- ai-video 13 -->
+    <text x="228" y="394" text-anchor="end" fill="#d8cbb2">ai-video</text>
+    <rect x="240" y="380" width="468" height="20" rx="5" fill="url(#bar)"/>
+    <text x="720" y="395" fill="#e7b969" font-weight="700">13</text>
+    <!-- ai-writing 12 -->
+    <text x="228" y="427" text-anchor="end" fill="#d8cbb2">ai-writing</text>
+    <rect x="240" y="413" width="432" height="20" rx="5" fill="url(#bar)"/>
+    <text x="684" y="428" fill="#e7b969" font-weight="700">12</text>
+    <!-- analytics 7 -->
+    <text x="228" y="460" text-anchor="end" fill="#d8cbb2">analytics</text>
+    <rect x="240" y="446" width="252" height="20" rx="5" fill="url(#bar)"/>
+    <text x="504" y="461" fill="#e7b969" font-weight="700">7</text>
+    <!-- payments 7 -->
+    <text x="228" y="493" text-anchor="end" fill="#d8cbb2">payments</text>
+    <rect x="240" y="479" width="252" height="20" rx="5" fill="url(#bar)"/>
+    <text x="504" y="494" fill="#e7b969" font-weight="700">7</text>
+  </g>
+
+  <text x="40" y="536" font-family="ui-monospace, Menlo, monospace" font-size="13" fill="#8a7a5c">Full category list and live counts: GET /api/v2/discover</text>
+</svg>
