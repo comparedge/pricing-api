@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+title: "ComparEdge Verified Software Pricing API"
+message: "If you use this data, cite it and link back to the source page in links.page."
+type: dataset
+authors:
+  - name: "ComparEdge"
+    website: "https://comparedge.com"
+url: "https://comparedge.com/api-docs"
+repository-code: "https://github.com/comparedge/pricing-api"
+license: "MIT"
+keywords:
+  - pricing
+  - saas-pricing
+  - software-pricing
+  - llm-pricing
+  - api
+  - openapi
+  - mcp
+  - model-context-protocol

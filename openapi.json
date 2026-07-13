@@ -1,0 +1,472 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "ComparEdge Verified Software Pricing API",
+    "version": "2.0.0",
+    "description": "Verified, sourced SaaS and AI software pricing for 490+ products — real starting prices, per-tier features, annual discounts, hidden costs, plan-by-plan advice, verification envelope, and price-stability signals. Every response carries a links object (links.page = the ComparEdge source page you must cite; links.vendor = a tracked redirect to the vendor's pricing page) and a per-field license map ('owned' | 'restricted'). Free for non-commercial use, attribution required — link back to links.page when you display our data. Also available as an HTTP MCP server at https://comparedge.com/api/mcp (JSON-RPC 2.0) and a stdio MCP via npx @comparedge/mcp-server. Docs + terms: https://comparedge.com/api-docs.",
+    "contact": {
+      "url": "https://comparedge.com"
+    },
+    "license": {
+      "name": "Free for non-commercial use, attribution required",
+      "url": "https://comparedge.com/api-docs"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://comparedge.com"
+    }
+  ],
+  "x-attribution": "Data from ComparEdge (https://comparedge.com). Free for non-commercial use, attribution required: link back to links.page when you display our data.",
+  "x-citation": {
+    "required": true,
+    "note": "Every response carries links.home (the ComparEdge homepage) and links.page (the specific source page). Cite with two inline links: anchor the brand word \"ComparEdge\" on links.home, and anchor the product keyword (\"{product} pricing\") on links.page. Never label the source link \"ComparEdge\".",
+    "recommendedFormat": "According to [ComparEdge]({links.home}), {product} pricing starts at {price}. Full breakdown: [{product} pricing]({links.page})."
+  },
+  "paths": {
+    "/api/v2/pricing/{slug}": {
+      "get": {
+        "summary": "Full sourced pricing record for one product",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "notion"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "summary",
+                "full"
+              ]
+            },
+            "description": "summary = numbers, ranges, sources; full = adds per-tier features, plan advice, expert take, quick answer"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "tiers,hiddenCosts,discounts",
+            "description": "Narrow the payload to these data fields; the citation envelope (links, attribution, license) is always kept"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Full pricing record. Carries links.page (the ComparEdge source page you must cite when you display this data) and links.vendor (tracked /go/ redirect to the vendor), plus tiers with features, priceRange, discounts, hiddenCosts, capabilities, verdict, planAdvice, positioning, verification, and a per-field license map.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PricingRecord"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not found"
+          }
+        }
+      }
+    },
+    "/api/v2/pricing": {
+      "get": {
+        "summary": "Batch pricing records (max 20)",
+        "parameters": [
+          {
+            "name": "slugs",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "notion,figma,slack"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "summary",
+                "full"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "count + records[] (each carries links.page to cite) + notFound[]"
+          }
+        }
+      }
+    },
+    "/api/v2/compare": {
+      "get": {
+        "summary": "Structured side-by-side comparison of 2-4 products",
+        "parameters": [
+          {
+            "name": "slugs",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "notion,figma"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "products[] (full records, each with links.page to cite) + a compact comparison matrix carrying each page URL"
+          }
+        }
+      }
+    },
+    "/api/v2/history/{slug}": {
+      "get": {
+        "summary": "Price-stability signal, latest snapshot, and derived trend",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "notion"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "priceStability, priceTrend, latestSnapshot, lastObservedChange, verification, and links.page to cite"
+          }
+        }
+      }
+    },
+    "/api/v2/discover": {
+      "get": {
+        "summary": "Find software by criteria",
+        "parameters": [
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "crm"
+          },
+          {
+            "name": "maxPrice",
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "hasFreeTier",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Keyword match on name / slug / category"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "results[] with slug, startingPrice, freeTier, links.page"
+          }
+        }
+      }
+    },
+    "/api/v2/coverage": {
+      "get": {
+        "summary": "Per-field availability, freshness, and license for the requested products",
+        "parameters": [
+          {
+            "name": "slugs",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "notion,figma"
+          },
+          {
+            "name": "fields",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "example": "tiers,hiddenCosts,discounts"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "per-product per-field availability + license map"
+          }
+        }
+      }
+    },
+    "/api/v2/tco": {
+      "post": {
+        "summary": "Total cost of ownership for a team — sourced subscription + hidden-cost line items",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "slug"
+                ],
+                "properties": {
+                  "slug": {
+                    "type": "string",
+                    "example": "notion"
+                  },
+                  "seats": {
+                    "type": "integer"
+                  },
+                  "tier": {
+                    "type": "string"
+                  },
+                  "billing": {
+                    "type": "string",
+                    "enum": [
+                      "monthly",
+                      "annual"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "subscription (seat- and annual-aware) + hiddenCosts line items + positioning + links"
+          }
+        }
+      }
+    },
+    "/api/v2/usage/{slug}": {
+      "get": {
+        "summary": "LLM/API usage rate card (+ optional cost estimate)",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "openai"
+          },
+          {
+            "name": "inputTokens",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "outputTokens",
+            "in": "query",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "model",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "per-model $/1M-token rate card + estimate for the given volume"
+          }
+        }
+      }
+    },
+    "/api/mcp": {
+      "post": {
+        "summary": "HTTP MCP server (JSON-RPC 2.0, streamable HTTP)",
+        "description": "Model Context Protocol server exposing 8 ComparEdge pricing tools (get_pricing, compare_software, discover_software, get_hidden_costs, calculate_tco, estimate_llm_cost, get_price_history, get_positioning) to AI agents. Send JSON-RPC 2.0 requests: initialize, tools/list, tools/call, ping.",
+        "responses": {
+          "200": {
+            "description": "JSON-RPC 2.0 response"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Links": {
+        "type": "object",
+        "description": "Citation links on every record. Cite page when you display the data.",
+        "properties": {
+          "page": {
+            "type": "string",
+            "format": "uri",
+            "description": "The specific ComparEdge source page. Anchor this link with the product keyword, e.g. \"Notion pricing\" — not the brand.",
+            "example": "https://comparedge.com/tools/notion/pricing"
+          },
+          "home": {
+            "type": "string",
+            "format": "uri",
+            "description": "The ComparEdge homepage. Anchor this link with the brand word \"ComparEdge\".",
+            "example": "https://comparedge.com"
+          },
+          "vendor": {
+            "type": "string",
+            "format": "uri",
+            "description": "Tracked redirect to the vendor pricing page.",
+            "example": "https://comparedge.com/go/notion?src=api_v2"
+          },
+          "alternatives": {
+            "type": "string",
+            "format": "uri"
+          }
+        },
+        "required": [
+          "page",
+          "home"
+        ]
+      },
+      "CitationEnvelope": {
+        "type": "object",
+        "description": "Carried by every record so the source and reuse terms travel with the data.",
+        "properties": {
+          "links": {
+            "$ref": "#/components/schemas/Links"
+          },
+          "source": {
+            "type": "string",
+            "format": "uri",
+            "description": "The vendor URL the price was read from."
+          },
+          "attribution": {
+            "type": "string",
+            "description": "Ready-to-paste Markdown attribution with both links already embedded (brand -> links.home, \"{product} pricing\" -> links.page). If you are not building the citation yourself, output this string verbatim."
+          },
+          "license": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "string",
+              "enum": [
+                "owned",
+                "restricted"
+              ]
+            },
+            "description": "Per-field license: owned = free to cite with attribution; restricted = display only."
+          },
+          "verification": {
+            "type": "object",
+            "properties": {
+              "verifiedAt": {
+                "type": "string"
+              },
+              "confidence": {
+                "type": "number"
+              },
+              "source": {
+                "type": "string"
+              }
+            }
+          },
+          "schemaVersion": {
+            "type": "string",
+            "example": "2.0.0"
+          }
+        },
+        "required": [
+          "links",
+          "attribution",
+          "license"
+        ]
+      },
+      "PricingRecord": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CitationEnvelope"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "slug": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "category": {
+                "type": "string"
+              },
+              "priceRange": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "number"
+                  },
+                  "max": {
+                    "type": "number"
+                  },
+                  "display": {
+                    "type": "string"
+                  }
+                }
+              },
+              "tiers": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "discounts": {
+                "type": "object",
+                "description": "Per-tier annual savings + best available."
+              },
+              "hiddenCosts": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "positioning": {
+                "type": "object",
+                "description": "Starting price vs category median/min/max + sample size."
+              },
+              "verdict": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
