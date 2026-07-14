@@ -36,6 +36,7 @@ Every endpoint returns JSON and needs no key. `GET` unless noted.
 | `/api/v2/coverage` | Per-field availability, freshness, and license | `slugs=`, `fields=` |
 | `/api/v2/usage/{slug}` | LLM / API usage rate card, with optional estimate | `inputTokens=`, `outputTokens=` |
 | `/api/v2/tco` `POST` | Team total cost of ownership, sourced line items | `slug`, `seats`, `billing` |
+| `/api/v2/cost-guide/{slug}` | Negotiation-ready true-cost brief: renewal-rate costs, transparency score, discount programs, tactics with expected discounts, and a free negotiation email generator | — |
 | `/api/mcp` `POST` | HTTP MCP server (JSON-RPC 2.0) | — |
 
 Full schemas: [`openapi.json`](./openapi.json) or the live [OpenAPI spec](https://comparedge.com/api/v2/openapi.json).
@@ -147,6 +148,7 @@ curl -X POST "https://comparedge.com/api/mcp" \
 | `estimate_llm_cost` | Token-based cost estimate for an LLM or API |
 | `get_price_history` | Price-stability signal and latest snapshot |
 | `get_positioning` | Where a product sits against its category median |
+| `get_cost_guide` | True-cost brief: renewal rates, surviving discounts, negotiation tactics |
 
 Setup notes and a full request: [`examples/mcp.md`](./examples/mcp.md).
 
