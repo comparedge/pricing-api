@@ -4,6 +4,7 @@
 
 [![OpenAPI 3.1](https://img.shields.io/badge/OpenAPI-3.1-6BA539?logo=openapiinitiative&logoColor=white)](https://comparedge.com/api/v2/openapi.json)
 [![MCP](https://img.shields.io/badge/MCP-JSON--RPC%202.0-8A63D2)](https://comparedge.com/api/mcp)
+[![MCP Badge](https://lobehub.com/badge/mcp/comparedge-pricing-api)](https://lobehub.com/mcp/comparedge-pricing-api)
 [![No API key](https://img.shields.io/badge/API%20key-not%20required-2ea043)](https://comparedge.com/api-docs)
 [![License: attribution](https://img.shields.io/badge/data-attribution%20required-c68832)](./LICENSE)
 [![Tools](https://img.shields.io/badge/tools-490%2B-e7b969)](https://comparedge.com/api/v2/discover)
